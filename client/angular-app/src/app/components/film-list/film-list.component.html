@@ -1,0 +1,16 @@
+<div *ngIf="films && manufacturers && films[0] && manufacturers[0]">
+  <!-- Add film -->
+  <button (click)="toggleShowAddFilm()">Add Film</button>
+  <app-add-film (cancel)="toggleShowAddFilm()" [manufacturers]="manufacturers" *ngIf="isShowAddFilm"
+    (setFilms)="setFilms()"></app-add-film>
+
+  <!-- Display Films -->
+  <div class="grid-layout">
+    <app-film-item *ngFor="let film of films" [manufacturers]="manufacturers" (setFilms)="setFilms()" [film]="film">
+    </app-film-item>
+  </div>
+</div>
+
+<div *ngElse>
+  Loading...
+</div>

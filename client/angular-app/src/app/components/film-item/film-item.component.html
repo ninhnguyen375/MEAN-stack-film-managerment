@@ -1,0 +1,14 @@
+<div class="grid-item">
+  <img [src]="host + 'img/' +film.img" alt="banner" width="100" />
+  <div>{{ film.name }}</div>
+  <div>{{ film.director }}</div>
+  <div>{{ getManufacturerName(manufacturers, film.manufacturer) }}</div>
+  <div>{{ film.start_record }}</div>
+  <div>{{ film.premiere_date }}</div>
+  <button (click)="toggleShowEditFilm()">Edit</button>
+  <button (click)="handleRemoveFilm(film._id)">Remove</button>
+
+  <app-edit-film *ngIf="isShowEditFilm" [manufacturers]="manufacturers"
+    (cancel)="toggleShowEditFilm()" (setFilms)="onSetFilms()" [film]="film">
+  </app-edit-film>
+</div>

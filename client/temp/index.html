@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <input name="start_record" type="date" />
+  <input name="premiere_date" type="date" />
+  <button type="button" onclick="handleAddFilm()">Submit</button>
+  <button type="button" onclick="getFilms()">get films</button>
+  <button type="button" onclick="editFilms()">edit films</button>
+  <div id="films"></div>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+  <script>
+    async function getFilms() {
+      const films = await axios.get('http://localhost:3000/api/films');
+
+      document.getElementById('films').innerHTML = JSON.stringify(films.data);
+    }
+
+    async function editFilms() {
+      let start_record = document.querySelector('input[name=start_record]').value
+      let premiere_date = document.querySelector('input[name=premiere_date]').value
+      try {
+        const res = await axios.put('http://localhost:3000/api/films/5cdd7706a1a6aa3164af09d2', {
+          "name": "Edited",
+          "img": "https://vignette.wikia.nocookie.net/marvel_dc/images/e/eb/Krypto_the_Superdog.JPG/revision/latest?cb=20061025124213",
+          "director": "David Jane",
+          "manufacturer": "5cdc169b14335971c1e0cc61",
+          "start_record": start_record,
+          "premiere_date": premiere_date
+        })
+        console.log(res.data);
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    async function handleAddFilm() {
+      let start_record = document.querySelector('input[name=start_record]').value
+      let premiere_date = document.querySelector('input[name=premiere_date]').value
+      const res = await axios.post('http://localhost:3000/api/films', {
+        "name": "Harry Potter",
+        "img": "https://vignette.wikia.nocookie.net/marvel_dc/images/e/eb/Krypto_the_Superdog.JPG/revision/latest?cb=20061025124213",
+        "director": "David Jane",
+        "manufacturer": "5cdc169b14335971c1e0cc61",
+        "start_record": start_record,
+        "premiere_date": premiere_date
+      })
+      console.log(res.data);
+    }
+  </script>
+</body>
+
+</html>

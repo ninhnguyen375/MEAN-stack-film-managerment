@@ -1,0 +1,22 @@
+###
+GET http://localhost:3000/api/films HTTP/1.1
+###
+GET http://localhost:3000/api/films/5cdc165c14335971c1e0cc4c HTTP/1.1
+
+###
+POST http://localhost:3000/api/films HTTP/1.1
+Content-Type: application/json
+
+{
+  "film": {
+    "name": "Harry Potter",
+    "img": "https://vignette.wikia.nocookie.net/marvel_dc/images/e/eb/Krypto_the_Superdog.JPG/revision/latest?cb=20061025124213",
+    "director": "David Jane",
+    "manufacturer": "5cdc169b14335971c1e0cc61",
+    "start_record": "12-12-1999",
+    "premiere_date": "14-11-2020"
+  }
+}
+
+###
+DELETE http://localhost:3000/api/films/5cdd7a1b1c59d42d108b0e15 HTTP/1.1
