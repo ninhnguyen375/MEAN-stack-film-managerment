@@ -1,36 +1,128 @@
-<div class="form-fixed-center">
-  <form (ngSubmit)="handleEditFilm(myForm)" #myForm>
-    <img [src]="host + 'img/' + film.img" alt="banner" width="100" />
+<!-- <div class="form-fixed-center"> -->
+<!-- <form (ngSubmit)="handleEditFilm(myForm)" #myForm> -->
+<!-- <img [src]="host + 'img/' + film.img" alt="banner" width="100" /> -->
+<!--  -->
+<!-- Film ID -->
+<!-- <input required type="hidden" name="id" [value]="film._id"> -->
+<!--  -->
+<!-- Edit Image -->
+<!-- <button type="button"><label for="file">Change Image</label></button> -->
+<!-- <input required accept="image/png, image/jpeg" class="hidden" type="file" id="file" -->
+<!-- name="file" /> -->
+<!--  -->
+<!-- Edit Name -->
+<!-- <input required type="text" name="name" [value]="film.name"> -->
+<!--  -->
+<!-- Edit Director -->
+<!-- <input required type="text" name="director" [value]="film.director"> -->
+<!--  -->
+<!-- Edit manufacturer -->
+<!-- <select name="manufacturer"> -->
+<!-- <option [selected]="film.manufacturer === manufacturer._id" -->
+<!-- *ngFor="let manufacturer of manufacturers" [value]="manufacturer._id"> -->
+<!-- {{ manufacturer.name }} -->
+<!-- </option> -->
+<!-- </select> -->
+<!--  -->
+<!-- Edit start_record -->
+<!-- <input required [value]="film.start_record" type="date" name="start_record"> -->
+<!--  -->
+<!-- Edit premiere_date -->
+<!-- <input required [value]="film.premiere_date" type="date" name="premiere_date"> -->
+<!--  -->
+<!-- <button type="submit">Edit</button> -->
+<!-- <button type="button" (click)="onCancel()">Cancel</button> -->
+<!-- </form> -->
+<!-- </div> -->
+<!--  -->
+<!-- Form -->
+<nz-modal [(nzVisible)]="isShowEditFilm" (nzOnOk)="handleEditFilm()" [nzOkLoading]="isOkLoading"
+  nzTitle="Edit This Film" (nzOnCancel)="onCancel()">
 
-    <!-- Film ID -->
-    <input required type="hidden" name="id" [value]="film._id">
+  <form nz-form [formGroup]="validateForm">
 
-    <!-- Edit Image -->
-    <button type="button"><label for="file">Change Image</label></button>
-    <input required accept="image/png, image/jpeg" class="hidden" type="file" id="file"
-      name="file" />
+    <img [src]="host + 'img/' + film.img" alt="banner" width="200" />
+    <nz-form-item>
+      <nz-form-control>
 
-    <!-- Edit Name -->
-    <input required type="text" name="name" [value]="film.name">
+        <nz-form-label [nzFor]="'file'">Change Image</nz-form-label>
+        <input nz-input accept="image/png, image/jpeg" type="file" id="file" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control>
+        <!-- Input name -->
+        <nz-form-label [nzFor]="'name'">Film's Name</nz-form-label>
+        <input id="name" type="text" nz-input formControlName="name" placeholder="name"
+          [value]="film.name" />
+        <!-- Explain Errors -->
+        <nz-form-explain
+          *ngIf="validateForm.get('name')?.dirty && validateForm.get('name')?.errors">
+          Please input name!</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
 
-    <!-- Edit Director -->
-    <input required type="text" name="director" [value]="film.director">
+    <!-- Director -->
+    <nz-form-item>
+      <nz-form-control>
+        <!-- Input Director -->
+        <nz-form-label [nzFor]="'director'">Film's Director</nz-form-label>
+        <input id="director" type="text" nz-input formControlName="director" placeholder="director"
+          [value]="film.director" />
+        <!-- Explain Errors -->
+        <nz-form-explain
+          *ngIf="validateForm.get('director')?.dirty && validateForm.get('director')?.errors">
+          Please input director!</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
 
-    <!-- Edit manufacturer -->
-    <select name="manufacturer">
-      <option [selected]="film.manufacturer === manufacturer._id"
-        *ngFor="let manufacturer of manufacturers" [value]="manufacturer._id">
-        {{ manufacturer.name }}
-      </option>
-    </select>
+    <!-- manufacturer -->
+    <nz-form-item>
+      <nz-form-control>
+        <!-- Input Director -->
+        <nz-form-label [nzFor]="'manufacturer'">Film's manufacturer</nz-form-label>
+        <nz-select formControlName="manufacturer">
+          <nz-option *ngFor="let m of manufacturers" [nzLabel]="m.name" [nzValue]="m._id">
+          </nz-option>
+        </nz-select>
+        <!-- Explain Errors -->
+        <nz-form-explain
+          *ngIf="validateForm.get('director')?.dirty && validateForm.get('director')?.errors">
+          Please input director!</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
 
-    <!-- Edit start_record -->
-    <input required [value]="film.start_record" type="date" name="start_record">
+    <!-- start_record -->
+    <nz-form-item>
+      <nz-form-control>
+        <!-- Input start_record -->
+        <nz-form-label [nzFor]="'start_record'">Start record (<= now)</nz-form-label>
+            <nz-date-picker id="start_record" formControlName="start_record"
+            [nzValue]="film.start_record">
+            </nz-date-picker>
+            <!-- Explain Errors -->
+            <nz-form-explain
+              *ngIf="validateForm.get('start_record')?.dirty && validateForm.get('start_record')?.errors">
+              Please input start record!</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
 
-    <!-- Edit premiere_date -->
-    <input required [value]="film.premiere_date" type="date" name="premiere_date">
+    <!-- premiere_date -->
+    <nz-form-item>
+      <nz-form-control>
+        <!-- Input premiere_date -->
+        <nz-form-label [nzFor]="'premiere_date'">Premiere date (>= now)</nz-form-label>
+        <nz-date-picker id="premiere_date" formControlName="premiere_date"
+          [nzValue]="film.premiere_date">
+        </nz-date-picker>
+        <!-- Explain Errors -->
+        <nz-form-explain
+          *ngIf="validateForm.get('premiere_date')?.dirty && validateForm.get('premiere_date')?.errors">
+          Please input premiere_date!</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
 
-    <button type="submit">Edit</button>
-    <button type="button" (click)="onCancel()">Cancel</button>
+    <!-- SUBMIT -->
+    <!-- <button type="submit" nz-button [nzType]="'primary'">Submit</button> -->
   </form>
-</div>
+</nz-modal>

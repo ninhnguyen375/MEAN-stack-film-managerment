@@ -1,14 +1,27 @@
 <div class="grid-item">
-  <img [src]="host + 'img/' +film.img" alt="banner" width="100" />
-  <div>{{ film.name }}</div>
-  <div>{{ film.director }}</div>
-  <div>{{ getManufacturerName(manufacturers, film.manufacturer) }}</div>
-  <div>{{ film.start_record }}</div>
-  <div>{{ film.premiere_date }}</div>
-  <button (click)="toggleShowEditFilm()">Edit</button>
-  <button (click)="handleRemoveFilm(film._id)">Remove</button>
-
-  <app-edit-film *ngIf="isShowEditFilm" [manufacturers]="manufacturers"
-    (cancel)="toggleShowEditFilm()" (setFilms)="onSetFilms()" [film]="film">
-  </app-edit-film>
+  <nz-card nzHoverable [nzCover]="coverTemplate" style="width: 300px">
+    <nz-card-meta [nzTitle]="film.name">
+    </nz-card-meta>
+    <div style="margin-top: 10px">Director : {{ film.director }}</div>
+    <div>Manufacturer : {{ getManufacturerName(manufacturers, film.manufacturer) }}</div>
+    <div>Start record : {{ film.start_record }}</div>
+    <div>Premiere : {{ film.premiere_date }}</div>
+    <div style="height: 30px"></div>
+    <div class="actions">
+      <button [nzGhost]="true" [nzSize]="'large'" nz-button [nzType]="'primary'"
+        [nzShape]="'circle'" (click)="toggleShowEditFilm()"><i nz-icon nzType="edit"
+          nzTheme="outline"></i></button>
+      <button [nzSize]="'large'" nz-button [nzType]="'danger'" [nzGhost]="true" [nzShape]="'circle'"
+        (click)="showDeleteConfirm(film._id)"><i nz-icon nzType="delete"
+          nzTheme="outline"></i></button>
+    </div>
+  </nz-card>
 </div>
+
+<ng-template #coverTemplate>
+  <img alt="example" [src]="host + 'img/' + film.img" />
+</ng-template>
+
+<app-edit-film [isShowEditFilm]="isShowEditFilm" [manufacturers]="manufacturers"
+  (cancel)="toggleShowEditFilm()" (setFilms)="onSetFilms()" [film]="film">
+</app-edit-film>

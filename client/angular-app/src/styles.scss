@@ -20,18 +20,37 @@ html {
 .grid-layout {
   margin: 0 10% 0 10%;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   grid-gap: 1em;
+  transition: 0.5s;
+
 
   .grid-item {
-    border: 1px solid lightgray;
-    text-align: center;
     padding: 10px;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    padding-bottom: 20px;
+    position: relative;
+
+    .actions {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+
+      button {
+        margin: 10px 10px 10px 0;
+      }
+    }
   }
 }
 
 .hidden {
   display: none;
+  opacity: 0;
+  position: fixed;
+  top: -999;
+  left: -999;
 }
 
 .d-block {
@@ -62,4 +81,8 @@ html {
       width: 100%;
     }
   }
+}
+
+.text-center {
+  text-align: center;
 }

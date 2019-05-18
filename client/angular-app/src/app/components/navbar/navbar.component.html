@@ -1,3 +1,10 @@
-<p>
-  navbar works!
-</p>
+<ul nz-menu [nzMode]="'horizontal'">
+  <li nz-menu-item>
+    <a class="title" [routerLink]="['/']" routerLinkActive="router-link-active">
+      Film Managerment
+    </a>
+  </li>
+  <li nz-menu-item>
+    <a [routerLink]="['/about']" routerLinkActive="router-link-active">About</a>
+  </li>
+</ul>
